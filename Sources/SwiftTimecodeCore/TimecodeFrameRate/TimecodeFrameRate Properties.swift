@@ -304,7 +304,31 @@ extension TimecodeFrameRate {
         in extent: Timecode.UpperLimit,
         base: Timecode.SubFramesBase
     ) -> Int {
-        maxTotalFrames(in: extent) * base.rawValue
+        // Computed in Int64 and clamped. At `.max100Days` this product exceeds
+        // Int32.max for every frame rate at the 80/100 subframe bases — the
+        // smallest case, 23.976fps@80, is already 16_588_800_000 — so on a
+        // 32-bit platform (wasm32, watchOS armv7k/arm64_32) the `Int` form
+        // trapped on overflow. Since the value is only ever used as an upper
+        // BOUND, and a subframe count that large is itself unrepresentable in a
+        // 32-bit `Int`, clamping still bounds the whole representable domain.
+        // No behaviour change on 64-bit: the clamp never engages.
+        Int(clamping: maxTotalSubFrames64(in: extent, base: base))
+    }
+
+    /// Exact count, for internal arithmetic that must not clamp.
+    func maxTotalSubFrames64(
+        in extent: Timecode.UpperLimit,
+        base: Timecode.SubFramesBase
+    ) -> Int64 {
+        Int64(maxTotalFrames(in: extent)) * Int64(base.rawValue)
+    }
+
+    /// Exact expressible count, for internal arithmetic that must not clamp.
+    func maxSubFrameCountExpressible64(
+        in extent: Timecode.UpperLimit,
+        base: Timecode.SubFramesBase
+    ) -> Int64 {
+        maxTotalSubFrames64(in: extent, base: base) - 1
     }
 
     /// Returns max elapsed subframes possible before rolling over to 0.

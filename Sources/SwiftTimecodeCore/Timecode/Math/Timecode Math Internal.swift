@@ -59,7 +59,7 @@ extension Timecode {
 
         var sfcNew = fcOrigin.subFrameCount + fcAdd.subFrameCount
 
-        sfcNew = sfcNew.clamped(to: 0 ... maxSubFrameCountExpressible)
+        sfcNew = sfcNew.clamped(to: 0 ... maxSubFrameCountExpressible64)
 
         let fcNew = FrameCount(
             subFrameCount: sfcNew,
@@ -91,7 +91,7 @@ extension Timecode {
 
         var sfcNew = fcOrigin.subFrameCount + fcAdd.subFrameCount
 
-        let maxTotalSubFrames = frameRate.maxTotalSubFrames(
+        let maxTotalSubFrames = frameRate.maxTotalSubFrames64(
             in: upperLimit,
             base: subFramesBase
         )
@@ -202,7 +202,7 @@ extension Timecode {
 
         var sfcNew = fcOrigin.subFrameCount - tcSubtract.subFrameCount
 
-        sfcNew = sfcNew.clamped(to: 0 ... maxSubFrameCountExpressible)
+        sfcNew = sfcNew.clamped(to: 0 ... maxSubFrameCountExpressible64)
 
         let fcNew = FrameCount(
             subFrameCount: sfcNew,
@@ -234,7 +234,7 @@ extension Timecode {
 
         var sfcNew = fcOrigin.subFrameCount - tcSubtract.subFrameCount
 
-        let maxTotalSubFrames = frameRate.maxTotalSubFrames(
+        let maxTotalSubFrames = frameRate.maxTotalSubFrames64(
             in: upperLimit,
             base: subFramesBase
         )
@@ -308,10 +308,10 @@ extension Timecode {
         let sfcNew = Double(fcOrigin.subFrameCount) * factor
 
         if sfcNew < 0.0 { return nil }
-        if sfcNew > Double(maxSubFrameCountExpressible) { return nil }
+        if sfcNew > Double(maxSubFrameCountExpressible64) { return nil }
 
         let fcNew = FrameCount(
-            subFrameCount: Int(sfcNew),
+            subFrameCount: Int64(sfcNew),
             base: subFramesBase
         )
 
@@ -333,9 +333,9 @@ extension Timecode {
             base: subFramesBase
         )
 
-        var sfcNew = Int(Double(fcOrigin.subFrameCount) * factor)
+        var sfcNew = Int64(Double(fcOrigin.subFrameCount) * factor)
 
-        sfcNew = sfcNew.clamped(to: 0 ... maxSubFrameCountExpressible)
+        sfcNew = sfcNew.clamped(to: 0 ... maxSubFrameCountExpressible64)
 
         let fcNew = FrameCount(
             subFrameCount: sfcNew,
@@ -360,9 +360,9 @@ extension Timecode {
             base: subFramesBase
         )
 
-        var sfcNew = Int(Double(fcOrigin.subFrameCount) * factor)
+        var sfcNew = Int64(Double(fcOrigin.subFrameCount) * factor)
 
-        let maxTotalSubFrames = frameRate.maxTotalSubFrames(
+        let maxTotalSubFrames = frameRate.maxTotalSubFrames64(
             in: upperLimit,
             base: subFramesBase
         )
@@ -401,7 +401,7 @@ extension Timecode {
             base: subFramesBase
         )
 
-        let sfcNew = Int(Double(fcOrigin.subFrameCount) * factor)
+        let sfcNew = Int64(Double(fcOrigin.subFrameCount) * factor)
 
         let fcNew = FrameCount(
             subFrameCount: sfcNew,
@@ -431,10 +431,10 @@ extension Timecode {
         let sfcNew = Double(fcOrigin.subFrameCount) / divisor
 
         if sfcNew < 0.0 { return nil }
-        if sfcNew > Double(maxSubFrameCountExpressible) { return nil }
+        if sfcNew > Double(maxSubFrameCountExpressible64) { return nil }
 
         let fcNew = FrameCount(
-            subFrameCount: Int(sfcNew),
+            subFrameCount: Int64(sfcNew),
             base: subFramesBase
         )
 
@@ -456,9 +456,9 @@ extension Timecode {
             base: subFramesBase
         )
 
-        var sfcNew = Int(Double(fcOrigin.subFrameCount) / divisor)
+        var sfcNew = Int64(Double(fcOrigin.subFrameCount) / divisor)
 
-        sfcNew = sfcNew.clamped(to: 0 ... maxSubFrameCountExpressible)
+        sfcNew = sfcNew.clamped(to: 0 ... maxSubFrameCountExpressible64)
 
         let fcNew = FrameCount(
             subFrameCount: sfcNew,
@@ -483,9 +483,9 @@ extension Timecode {
             base: subFramesBase
         )
 
-        var sfcNew = Int(Double(fcOrigin.subFrameCount) / divisor)
+        var sfcNew = Int64(Double(fcOrigin.subFrameCount) / divisor)
 
-        let maxTotalSubFrames = frameRate.maxTotalSubFrames(
+        let maxTotalSubFrames = frameRate.maxTotalSubFrames64(
             in: upperLimit,
             base: subFramesBase
         )
@@ -524,7 +524,7 @@ extension Timecode {
             base: subFramesBase
         )
 
-        let sfcNew = Int(Double(fcOrigin.subFrameCount) / divisor)
+        let sfcNew = Int64(Double(fcOrigin.subFrameCount) / divisor)
 
         let fcNew = FrameCount(
             subFrameCount: sfcNew,
@@ -560,7 +560,7 @@ extension Timecode {
         let sfcNew = Double(fcOrigin.subFrameCount) / Double(fcDivisor.subFrameCount)
 
         if sfcNew < 0.0 { return nil }
-        if sfcNew > Double(maxSubFrameCountExpressible) { return nil }
+        if sfcNew > Double(maxSubFrameCountExpressible64) { return nil }
 
         return sfcNew
     }

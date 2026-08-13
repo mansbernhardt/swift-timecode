@@ -203,4 +203,15 @@ extension Timecode {
             base: subFramesBase
         )
     }
+
+    /// Exact expressible subframe count. Internal counterpart to
+    /// ``maxSubFrameCountExpressible``, which clamps to `Int` — see the note
+    /// there. Arithmetic must use this one or it re-introduces the overflow on
+    /// 32-bit platforms.
+    var maxSubFrameCountExpressible64: Int64 {
+        frameRate.maxSubFrameCountExpressible64(
+            in: upperLimit,
+            base: subFramesBase
+        )
+    }
 }
